@@ -1,4 +1,6 @@
-[
+const { Post } = require('../models/Post');
+
+const postData = [
     {
 		"title": "Design Tech",
 		"post_content": "Maple is a stylish and exceptionally made accessory",
@@ -24,4 +26,8 @@
 		"post_content": "The accessory has a minimalist design and exceptional build quality.",
 		"user_id": 5
 	}
-]
+];
+
+const seedPost = () => Post.bulkCreate(postData);
+
+module.exports = seedPost;
