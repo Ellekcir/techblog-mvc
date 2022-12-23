@@ -1,10 +1,11 @@
+const sequelize = require('../config/connection');
 // This will seed the db with pre-made data 
 // the seeds are filled by using the Models
 const seedComment = require('./comment-seeds');
 const seedPost = require('./post-seeds');
 const seedUser = require('./user-seeds');
 
-const sequelize = require('../config/connection');
+
 
 const seedAll = async () => {
 

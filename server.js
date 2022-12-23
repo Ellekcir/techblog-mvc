@@ -4,7 +4,7 @@
 
 // The dotenv is used to keep passwords, API keys, and other sensitive data out of your code. 
 // It allows you to create environment variables in a . env file instead of putting them in your code.
-// require('dotenv').config();
+require('dotenv').config();
 
 // This will set up Node.js's Express static paths, path module provides utilities for working with file and directory paths
 const path = require('path');
@@ -13,7 +13,7 @@ const path = require('path');
 // Express = Fast, unopinionated, minimalist web framework for Node.js
 // Handlebars is a simple templating language. It uses a template and an input object to generate HTML or other text formats.
 const express = require('express');
-// const exphbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
 
 // Express-session - an HTTP server-side framework used to create and manage a session middleware.
 // Express-session stores only a session identifier on the client within a cookie and stores the session data on the server, typically in a database
@@ -21,8 +21,10 @@ const express = require('express');
 const session = require('express-session');
 
 // This is where the server.js will access the Express Routes
-// const routes = require('./controllers');
-//const helpers = require('./utils/helpers');
+const routes = require('./controllers');
+
+const helpers = require('./utils/auth');
+
 // Set up an Express App
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -51,23 +53,23 @@ db: sequelize,
 };
 
 // Creates 'Express-Handlebars' with a default layout
-// const hbs = exphbs.create({ 
-//     // Helpers
-// });
+const hbs = exphbs.create({ 
+   helpers
+});
 
 
 // Sets up the session with the above a values implemented
 app.use(session(sess));
 
 
-// app.engine('handlebars', hbs.engine);
-// app.set('view engine', 'handlebars');
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(routes);
+app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
