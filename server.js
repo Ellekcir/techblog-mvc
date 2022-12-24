@@ -34,27 +34,30 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 //Sets up the connection of Sequelize
 const sequelize = require('./config/connection');
 
+
+
+
 // Set up session storage with Sequelize
 const sess = {
-secret: 'Super secret secret',
-// http://expressjs.com/en/resources/middleware/cookie-session.html
-// https://medium.com/@alysachan830/cookie-and-session-ii-how-session-works-in-express-session-7e08d102deb8
-cookie: {
-//     // Stored in milliseconds
-//     // (86400000 ms === 1 day)
-//     // (3600000 ms === 1 hour)
-//     maxAge: 3600000,
+  secret: 'Super secret secret',
+  // http://expressjs.com/en/resources/middleware/cookie-session.html
+  // https://medium.com/@alysachan830/cookie-and-session-ii-how-session-works-in-express-session-7e08d102deb8
+  cookie: {
+    //     // Stored in milliseconds
+    //     // (86400000 ms === 1 day)
+    //     // (3600000 ms === 1 hour)
+    //     maxAge: 3600000,
   },
-resave: false,
-saveUninitialized: true,
-store: new SequelizeStore({
-db: sequelize,
-}),
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
 };
 
 // Creates 'Express-Handlebars' with a default layout
-const hbs = exphbs.create({ 
-   helpers
+const hbs = exphbs.create({
+  helpers
 });
 
 
@@ -65,9 +68,11 @@ app.use(session(sess));
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use(routes);
 
