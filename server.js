@@ -23,7 +23,7 @@ const session = require('express-session');
 // This is where the server.js will access the Express Routes
 const routes = require('./controllers');
 
-const helpers = require('./utils/auth');
+const helpers = require('./utils/helper');
 
 // Set up an Express App
 const app = express();

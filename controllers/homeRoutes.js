@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post } = require("../models");
+const { Post, Comment, User } = require("../models");
 
 //* this is the base Express route when the "homepage.handlebars" loads
 router.get('/', async (req, res) => {
@@ -15,6 +15,32 @@ router.get('/', async (req, res) => {
 console.log(err);
     }
 });
+
+router.get('/posts/:id', async (req, res) => {
+    try {
+      const postData = await Post.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            attributes: ['username'],
+          },
+          {
+            model: Comment,
+            include: [ User ]
+          }
+        ],
+      });
+  
+      const post = postData.get({ plain: true });
+  
+      res.render('post', {
+        ...post,
+        logged_in: req.session.logged_in
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
 router.get('/login', (req, res) => {
     

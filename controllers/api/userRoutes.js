@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
     const userData = await User.findOne({ where: { email: req.body.email } });
     console.log(userData);
     if (!userData) {
-      res.status(400).json({ message: 'Incorrect email or password, please try again' });
+      res.status(404).json({ message: 'User not found' });
       return;
     }
 
@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
     console.log('Logging in');
     // once the user has logged in this will create a session as 'loggedin'
     req.session.save(() => {
-      req.session.user_id = userData.username;
+      req.session.user_id = userData.id;
       req.session.loggedIn = true;
 
       res.json({ user: userData, message: 'You are now logged in!' });

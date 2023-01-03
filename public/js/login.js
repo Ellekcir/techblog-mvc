@@ -15,7 +15,7 @@ const loginFormHandle = async (event) => {
     // If the request fails, the promise is rejected. 
     // To get the data received in the response,
     // you need to wait for this promise to resolve into the Response object
-    const response = await fetch("http://localhost:3001/api/users/login", {
+    const response = await fetch("/api/users/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: { "Content-Type": "application/json" },
