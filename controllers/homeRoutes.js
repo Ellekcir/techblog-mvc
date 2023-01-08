@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Post, Comment, User } = require("../models");
+const  withAuth = require('../utils/auth.js')
 
 //* this is the base Express route when the "homepage.handlebars" loads
 router.get('/', async (req, res) => {
@@ -65,5 +66,32 @@ router.get('/signup', (req, res) => {
         username: req.session.username,
     });
 });
+
+router.get('/dashboard', withAuth, async (req, res) => {
+  console.log(req.session);
+  try {
+let userData = await User.findByPk(req.session.user_id, {
+  attributes: {
+    exclude: ['password']
+
+  }, 
+  include: [{
+  model: Post
+  }]
+})
+const user = userData.get({ plain: true });
+  console.log(user);
+  // res.status(200).json(user);
+
+res.render('dashboard', {
+  ...user,
+  logged_in: req.session.logged_in
+});
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
+} );
+
 module.exports = router;
 

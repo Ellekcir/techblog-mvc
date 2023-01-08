@@ -24,10 +24,10 @@ const loginFormHandle = async (event) => {
     console.log(response);
 
     if (response.ok) {
-        console.log("TESTING");
-      document.location.replace('/');
+      console.log("TESTING");
+      document.location.replace('/dashboard');
     } else {
-        console.log(err);
+      console.log(err);
       alert("Failed to log in.");
     }
   }

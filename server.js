@@ -27,7 +27,7 @@ const helpers = require('./utils/helper');
 
 // Set up an Express App
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // connect-session-sequelize is a SQL session store using Sequelize.js.
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
